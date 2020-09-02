@@ -5,12 +5,12 @@ Award = Struct.new(:name, :expires_in, :quality) do
       if self.quality < 50
         self.quality += 1
       end
-      self.expires_in -= 1
-      if self.expires_in < 0
+      if self.expires_in <= 0
         if self.quality < 50
           self.quality += 1
         end
       end
+      self.expires_in -= 1
     when 'Blue Compare'
       if self.quality < 50
         self.quality += 1
@@ -25,22 +25,22 @@ Award = Struct.new(:name, :expires_in, :quality) do
           end
         end
       end
-      self.expires_in -= 1
-      if self.expires_in < 0
+      if self.expires_in <= 0
         self.quality = 0
       end
+      self.expires_in -= 1
     when 'Blue Distinction Plus'
       # do nothing
     else
       if self.quality > 0
         self.quality -= 1
       end
-      self.expires_in -= 1
-      if self.expires_in < 0
+      if self.expires_in <= 0
         if self.quality > 0
           self.quality -= 1
         end
       end
+      self.expires_in -= 1
     end
   end
 end
