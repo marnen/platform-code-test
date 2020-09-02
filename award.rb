@@ -1,6 +1,13 @@
 Award = Struct.new(:name, :expires_in, :quality) do
   def update_quality!
-    case name
+    modify_quality!
+    modify_expiration!
+  end
+
+  private
+
+  def modify_quality!
+    case self.name
     when 'Blue First'
       if self.quality < 50
         self.quality += 1
@@ -10,7 +17,6 @@ Award = Struct.new(:name, :expires_in, :quality) do
           self.quality += 1
         end
       end
-      self.expires_in -= 1
     when 'Blue Compare'
       if self.quality < 50
         self.quality += 1
@@ -28,7 +34,6 @@ Award = Struct.new(:name, :expires_in, :quality) do
       if self.expires_in <= 0
         self.quality = 0
       end
-      self.expires_in -= 1
     when 'Blue Distinction Plus'
       # do nothing
     else
@@ -40,6 +45,16 @@ Award = Struct.new(:name, :expires_in, :quality) do
           self.quality -= 1
         end
       end
+    end
+  end
+
+  def modify_expiration!
+    case self.name
+    when 'Blue First', 'Blue Compare'
+      self.expires_in -= 1
+    when 'Blue Distinction Plus'
+      # do nothing
+    else
       self.expires_in -= 1
     end
   end
