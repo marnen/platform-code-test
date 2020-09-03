@@ -1,5 +1,4 @@
 require 'rspec'
-require 'shared_examples/award_examples'
 require 'award'
 
 RSpec.describe Award do

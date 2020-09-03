@@ -1,5 +1,6 @@
 require 'rspec'
 require 'support/dummy_award'
+require 'shared_contexts/award_contexts'
 require 'shared_examples/award_examples'
 require 'awards/blue_star'
 
