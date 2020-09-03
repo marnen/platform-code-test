@@ -1,11 +1,10 @@
 require 'rspec'
-require 'support/dummy_award'
+require 'shared_contexts/award_contexts'
 require 'awards/basic_behavior'
 
 RSpec.describe Awards::BasicBehavior do
-  let(:klass) do
-    Class.new(DummyAward).tap {|klass| klass.send :include, described_class }
-  end
+  include_context 'award class'
+
   let(:award){ klass.new expires_in: expires_in }
 
   describe '#countdown!' do

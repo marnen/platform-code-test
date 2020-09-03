@@ -1,13 +1,10 @@
 require 'rspec'
-require 'support/dummy_award'
 require 'shared_contexts/award_contexts'
 require 'shared_examples/award_examples'
 require 'awards/blue_star'
 
 RSpec.describe Awards::BlueStar do
-  let(:klass) do
-    Class.new(DummyAward).tap {|klass| klass.send :include, described_class }
-  end
+  include_context 'award class'
 
   let(:initial_expires_in) { rand(2..5) }
   let(:initial_quality) { rand(4..45) }
