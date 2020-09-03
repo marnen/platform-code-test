@@ -9,7 +9,7 @@ RSpec.describe Awards::Normal do
   end
 
   let(:initial_expires_in) { rand(2..5) }
-  let(:initial_quality) { rand(1..45) }
+  let(:initial_quality) { rand(2..45) }
   let(:award) { klass.new expires_in: initial_expires_in, quality: initial_quality }
 
   describe '#update_quality!' do

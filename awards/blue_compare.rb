@@ -1,8 +1,12 @@
+require 'awards/countdown'
+
 module Awards
   module BlueCompare
+    include Countdown
+
     def update_quality!
       modify_quality!
-      self.expires_in -= 1
+      countdown!
     end
 
     private
