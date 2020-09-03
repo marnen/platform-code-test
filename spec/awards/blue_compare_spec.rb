@@ -1,9 +1,9 @@
 require 'rspec'
 require 'support/dummy_award'
 require 'shared_examples/award_examples'
-require 'awards/blue_first'
+require 'awards/blue_compare'
 
-RSpec.describe Awards::BlueFirst do
+RSpec.describe Awards::BlueCompare do
   let(:klass) do
     Class.new(DummyAward).tap {|klass| klass.send :include, described_class }
   end
@@ -15,7 +15,9 @@ RSpec.describe Awards::BlueFirst do
   describe '#update_quality!' do
     let(:update!) { -> { award.update_quality! } }
 
-    context 'unexpired' do
+    context 'more than 10 days left' do
+      let(:initial_expires_in) { rand(11..50) }
+
       include_examples 'decrement count of days'
       include_examples 'quality does not go over 50'
 
@@ -24,14 +26,36 @@ RSpec.describe Awards::BlueFirst do
       end
     end
 
-    context 'expired' do
-      include_context 'expired'
+    context '6-10 days left' do
+      let(:initial_expires_in) { rand(6..10) }
 
       include_examples 'decrement count of days'
       include_examples 'quality does not go over 50'
 
       it 'increments the quality by 2' do
         expect(update!).to change { award.quality }.by 2
+      end
+    end
+
+    context '1-5 days left' do
+      let(:initial_expires_in) { rand(1..5) }
+
+      include_examples 'decrement count of days'
+      include_examples 'quality does not go over 50'
+
+      it 'increments the quality by 3' do
+        expect(update!).to change { award.quality }.by 3
+      end
+    end
+
+    context 'expired' do
+      include_context 'expired'
+
+      include_examples 'decrement count of days'
+
+      it 'sets the quality to 0' do
+        update!.call
+        expect(award.quality).to be_zero
       end
     end
   end

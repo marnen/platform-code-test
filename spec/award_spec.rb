@@ -44,71 +44,13 @@ RSpec.describe Award do
       end
     end
 
-    context 'awards with increasing quality' do
-      context 'Blue First' do
-        let(:name) { 'Blue First' }
-        subject { award }
-        it { should be_a_kind_of Awards::BlueFirst }
-      end
+    context 'awards with special rules' do
+      subject { award }
 
-      context 'Blue Compare' do
-        let(:name) { 'Blue Compare' }
-
-        context 'more than 10 days left' do
-          let(:initial_expires_in) { rand(11..50) }
-
-          include_examples 'decrement count of days'
-          include_examples 'quality does not go over 50'
-
-          it 'increments the quality by 1' do
-            expect(update!).to change { award.quality }.by 1
-          end
+      it 'includes a module for each set of special rules' do
+        ['Blue Compare', 'Blue First', 'Blue Distinction Plus'].each do |name|
+          expect(described_class.new name, 0, 0).to be_a_kind_of Awards.const_get(name.delete ' ')
         end
-
-        context '6-10 days left' do
-          let(:initial_expires_in) { rand(6..10) }
-
-          include_examples 'decrement count of days'
-          include_examples 'quality does not go over 50'
-
-          it 'increments the quality by 2' do
-            expect(update!).to change { award.quality }.by 2
-          end
-        end
-
-        context '1-5 days left' do
-          let(:initial_expires_in) { rand(1..5) }
-
-          include_examples 'decrement count of days'
-          include_examples 'quality does not go over 50'
-
-          it 'increments the quality by 3' do
-            expect(update!).to change { award.quality }.by 3
-          end
-        end
-
-        context 'expired' do
-          include_context 'expired'
-
-          include_examples 'decrement count of days'
-
-          it 'sets the quality to 0' do
-            update!.call
-            expect(award.quality).to be_zero
-          end
-        end
-      end
-    end
-
-    context 'Blue Distinction Plus' do
-      let(:name) { 'Blue Distinction Plus' }
-
-      it 'does not change quality' do
-        expect(update!).not_to change { award.quality }
-      end
-
-      it 'does not change expiration' do
-        expect(update!).not_to change { award.expires_in }
       end
     end
   end
