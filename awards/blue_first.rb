@@ -13,7 +13,7 @@ module Awards
     private
 
     def modify_quality!
-      self.quality += self.expires_in <= 0 ? 2 : 1
+      self.quality += expired? ? 2 : 1
       normalize_quality!
     end
   end
