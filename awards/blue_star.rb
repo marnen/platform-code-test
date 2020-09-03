@@ -1,10 +1,8 @@
-require 'awards/countdown'
+require 'awards/basic_behavior'
 
 module Awards
   module BlueStar
-    include Countdown
-    include NormalizeQuality
-
+    include BasicBehavior
     def update_quality!
       modify_quality!
       countdown!
