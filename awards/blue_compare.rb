@@ -3,6 +3,7 @@ require 'awards/countdown'
 module Awards
   module BlueCompare
     include Countdown
+    include NormalizeQuality
 
     def update_quality!
       modify_quality!
@@ -21,7 +22,7 @@ module Awards
       else
         self.quality = 0
       end
-      self.quality = [self.quality, 50].min
+      normalize_quality!
     end
   end
 end

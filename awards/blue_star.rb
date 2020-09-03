@@ -3,6 +3,7 @@ require 'awards/countdown'
 module Awards
   module BlueStar
     include Countdown
+    include NormalizeQuality
 
     def update_quality!
       modify_quality!
@@ -12,14 +13,8 @@ module Awards
     private
 
     def modify_quality!
-      if self.quality > 0
-        self.quality -= 2
-      end
-      if self.expires_in <= 0
-        if self.quality > 0
-          self.quality -= 2
-        end
-      end
+      self.quality -= self.expires_in <= 0 ? 4 : 2
+      normalize_quality!
     end
   end
 end
