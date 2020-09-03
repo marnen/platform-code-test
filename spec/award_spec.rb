@@ -1,4 +1,5 @@
 require 'rspec'
+require 'shared_examples/award_examples'
 require 'award'
 
 RSpec.describe Award do
@@ -10,16 +11,6 @@ RSpec.describe Award do
 
   describe '#update_quality!' do
     let(:update!) { -> { award.update_quality! } }
-
-    shared_examples 'decrement count of days' do
-      it 'decrements the count of days till expiration' do
-        expect(update!).to change { award.expires_in }.by -1
-      end
-    end
-
-    shared_context 'expired' do
-      let(:initial_expires_in) { 0 }
-    end
 
     context 'conventional award' do
       shared_examples 'quality is never negative' do
