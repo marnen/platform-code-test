@@ -1,9 +1,9 @@
 require 'rspec'
 require 'support/dummy_award'
 require 'shared_examples/award_examples'
-require 'awards/normal'
+require 'awards/blue_star'
 
-RSpec.describe Awards::Normal do
+RSpec.describe Awards::BlueStar do
   let(:klass) do
     Class.new(DummyAward).tap {|klass| klass.send :include, described_class }
   end
@@ -19,8 +19,8 @@ RSpec.describe Awards::Normal do
       include_examples 'decrement count of days'
       include_examples 'quality is never negative'
 
-      it 'decrements the quality by 1' do
-        expect(update!).to change { award.quality }.by -1
+      it 'decrements the quality by 2' do
+        expect(update!).to change { award.quality }.by -2
       end
     end
 
@@ -30,8 +30,8 @@ RSpec.describe Awards::Normal do
       include_examples 'decrement count of days'
       include_examples 'quality is never negative'
 
-      it 'decrements the quality by 2' do
-        expect(update!).to change { award.quality }.by -2
+      it 'decrements the quality by 4' do
+        expect(update!).to change { award.quality }.by -4
       end
     end
   end

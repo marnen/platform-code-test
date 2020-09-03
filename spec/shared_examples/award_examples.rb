@@ -17,3 +17,13 @@ shared_examples 'quality does not go over 50' do
     end
   end
 end
+
+shared_examples 'quality is never negative' do
+  context do
+    let(:initial_quality) { 0 }
+
+    it 'does not lower the quality below 0' do
+      expect(update!).not_to change { award.quality }
+    end
+  end
+end

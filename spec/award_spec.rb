@@ -22,7 +22,7 @@ RSpec.describe Award do
 
       context 'awards with special rules' do
         it 'includes the appropriate rules module' do
-          ['Blue Compare', 'Blue First', 'Blue Distinction Plus'].each do |name|
+          ['Blue Compare', 'Blue Distinction Plus', 'Blue First', 'Blue Star'].each do |name|
             mod = Awards.const_get(name.delete ' ')
             expect(described_class.new name, initial_expires_in, initial_quality).to be_a_kind_of mod
           end
