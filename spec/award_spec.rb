@@ -5,7 +5,7 @@ require 'award'
 RSpec.describe Award do
   let(:name) { "Normal Award #{rand 100}" }
   let(:initial_expires_in) { rand(2..5) }
-  let(:initial_quality) { rand(1..45) }
+  let(:initial_quality) { rand(2..45) }
 
   let(:award) { described_class.new name, initial_expires_in, initial_quality }
 
@@ -45,38 +45,10 @@ RSpec.describe Award do
     end
 
     context 'awards with increasing quality' do
-      shared_examples 'quality does not go over 50' do
-        context do
-          let(:initial_quality) { 50 }
-
-          it 'does not increase quality above 50' do
-            expect(update!).not_to change { award.quality }
-          end
-        end
-      end
-
       context 'Blue First' do
         let(:name) { 'Blue First' }
-
-        context 'unexpired' do
-          include_examples 'decrement count of days'
-          include_examples 'quality does not go over 50'
-
-          it 'increments the quality by 1' do
-            expect(update!).to change { award.quality }.by 1
-          end
-        end
-
-        context 'expired' do
-          include_context 'expired'
-
-          include_examples 'decrement count of days'
-          include_examples 'quality does not go over 50'
-
-          it 'increments the quality by 2' do
-            expect(update!).to change { award.quality }.by 2
-          end
-        end
+        subject { award }
+        it { should be_a_kind_of Awards::BlueFirst }
       end
 
       context 'Blue Compare' do
