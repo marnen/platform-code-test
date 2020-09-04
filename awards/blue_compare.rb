@@ -4,11 +4,6 @@ module Awards
   module BlueCompare
     include BasicBehavior
 
-    def update_quality!
-      modify_quality!
-      countdown!
-    end
-
     private
 
     def modify_quality!

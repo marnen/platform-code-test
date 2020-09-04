@@ -7,11 +7,6 @@ module Awards
       super() do
         include BasicBehavior
 
-        def update_quality!
-          modify_quality!
-          countdown!
-        end
-
         private
 
         define_method :daily_change do

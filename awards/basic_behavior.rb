@@ -13,5 +13,10 @@ module Awards
       min_quality = 0
       self.quality = [[self.quality, max_quality].min, min_quality].max
     end
+
+    def update_quality!
+      modify_quality!
+      countdown!
+    end
   end
 end
