@@ -1,9 +1,8 @@
+require 'awards/basic_behavior'
+
 module Awards
   module BlueCompare
-    def update_quality!
-      modify_quality!
-      self.expires_in -= 1
-    end
+    include BasicBehavior
 
     private
 
@@ -17,7 +16,7 @@ module Awards
       else
         self.quality = 0
       end
-      self.quality = [self.quality, 50].min
+      normalize_quality!
     end
   end
 end

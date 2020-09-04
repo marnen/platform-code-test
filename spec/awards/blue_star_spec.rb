@@ -1,13 +1,13 @@
 require 'rspec'
 require 'shared_contexts/award_contexts'
 require 'shared_examples/award_examples'
-require 'awards/blue_first'
+require 'awards/blue_star'
 
-RSpec.describe Awards::BlueFirst do
+RSpec.describe Awards::BlueStar do
   include_context 'award class'
 
   let(:initial_expires_in) { rand(2..5) }
-  let(:initial_quality) { rand(1..45) }
+  let(:initial_quality) { rand(4..45) }
   let(:award) { klass.new expires_in: initial_expires_in, quality: initial_quality }
 
   describe '#update_quality!' do
@@ -15,10 +15,10 @@ RSpec.describe Awards::BlueFirst do
 
     context 'unexpired' do
       include_examples 'decrement count of days'
-      include_examples 'quality does not go over 50'
+      include_examples 'quality is never negative'
 
-      it 'increments the quality by 1' do
-        expect(update!).to change { award.quality }.by 1
+      it 'decrements the quality by 2' do
+        expect(update!).to change { award.quality }.by -2
       end
     end
 
@@ -26,10 +26,10 @@ RSpec.describe Awards::BlueFirst do
       include_context 'expired'
 
       include_examples 'decrement count of days'
-      include_examples 'quality does not go over 50'
+      include_examples 'quality is never negative'
 
-      it 'increments the quality by 2' do
-        expect(update!).to change { award.quality }.by 2
+      it 'decrements the quality by 4' do
+        expect(update!).to change { award.quality }.by -4
       end
     end
   end
