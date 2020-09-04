@@ -9,7 +9,8 @@ shared_examples 'quality does not go over 50' do
     let(:initial_quality) { 50 }
 
     it 'does not increase quality above 50' do
-      expect(update!).not_to change { award.quality }
+      update!.call
+      expect(award.quality).not_to be > 50
     end
   end
 end
@@ -19,7 +20,8 @@ shared_examples 'quality is never negative' do
     let(:initial_quality) { 0 }
 
     it 'does not lower the quality below 0' do
-      expect(update!).not_to change { award.quality }
+      update!.call
+      expect(award.quality).not_to be < 0
     end
   end
 end

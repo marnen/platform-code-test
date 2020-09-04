@@ -1,19 +1,7 @@
-require 'awards/basic_behavior'
+require 'awards/linear'
 
 module Awards
   module BlueFirst
-    include BasicBehavior
-
-    def update_quality!
-      modify_quality!
-      countdown!
-    end
-
-    private
-
-    def modify_quality!
-      self.quality += expired? ? 2 : 1
-      normalize_quality!
-    end
+    include Linear.new daily_change: 1
   end
 end

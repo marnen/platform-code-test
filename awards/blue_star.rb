@@ -1,18 +1,7 @@
-require 'awards/basic_behavior'
+require 'awards/linear'
 
 module Awards
   module BlueStar
-    include BasicBehavior
-    def update_quality!
-      modify_quality!
-      countdown!
-    end
-
-    private
-
-    def modify_quality!
-      self.quality -= self.expired? ? 4 : 2
-      normalize_quality!
-    end
+    include Linear.new daily_change: -2
   end
 end

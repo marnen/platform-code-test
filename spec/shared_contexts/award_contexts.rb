@@ -1,8 +1,9 @@
 shared_context 'award class' do
   require 'support/dummy_award'
 
+  let(:mod) { described_class }
   let(:klass) do
-    Class.new(DummyAward).tap {|klass| klass.send :include, described_class }
+    Class.new(DummyAward).tap {|klass| klass.send :include, mod }
   end
 end
 
